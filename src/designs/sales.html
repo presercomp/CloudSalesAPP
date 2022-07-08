@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .label-empty {
+            padding-top: 25px;
+        }
+        .label-empty::before {
+            content: "\00a0 ";
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-10">
+                <div class="form-group">
+                    <label for="client" class="control-label">Cliente</label>
+                    <select name="client" id="client" class="form-control">
+                        <option value="0">--Seleccione</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-2">
+                <label for="" class="control-label label-empty"></label>
+                <button class="btn btn-success"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="product" class="control-label">Producto</label>
+                    <select name="product" id="product" class="form-control">
+                        <option value="0">--Seleccione</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="label-control" for="msv">U.M.V.</label>
+                    <input class="form-control" type="text" name="msv" id="msv" readonly=readonly>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="label-control" for="stock">Stock</label>
+                    <input class="form-control" type="text" name="stock" id="stock" readonly=readonly>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="label-control" for="qty">Cantidad</label>
+                    <input class="form-control" type="number" name="qty" id="qty">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="label-control" for="unitary">Unitario</label>
+                    <input class="form-control" type="number" name="unitary" id="unitary">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="label-control" for="discount">Descuento</label>
+                    <input class="form-control" type="number" name="discount" id="discount">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="label-control" for="total">Total</label>
+                    <input class="form-control" type="number" name="total" id="total">
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary btn-block">
+                    <i class="fas fa-cart-plus"></i>Agregar
+                </button>
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>  
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>         
+            <div class="col-6">
+                <label for="neto" class="control-label">Neto</label>
+                <input class="form-control" type="text" name="neto" id="neto" readonly="readonly" value="0">
+            </div>
+            <div class="col-6">
+                <label for="tax" class="control-label">IVA</label>
+                <input class="form-control" type="text" name="tax" id="tax" readonly="readonly" value="0">
+            </div>
+            <div class="col-6">
+                <label for="otherTaxs" class="control-label">Otros Impuestos</label>
+                <input class="form-control" type="text" name="otherTaxs" id="otherTaxs" readonly="readonly" value="0">
+            </div>
+            <div class="col-6">
+                <label for="final" class="control-label">Total</label>
+                <input class="form-control" type="text" name="final" id="final" readonly="readonly" value="0">
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-6">
+                <label for="type" class="control-label">Tipo de Venta</label>
+                <select class="form-control" name="type" id="type">
+                    <option value="0">-- --Seleccione</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <label for="document" class="control-label">Tipo de Documento</label>
+                <select class="form-control" name="document" id="document">
+                    <option value="0">-- --Seleccione</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
