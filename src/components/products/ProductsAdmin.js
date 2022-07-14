@@ -1,28 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar";
 import Topbar from "../Topbar";
+import { Link, useNavigate } from "react-router-dom";
 import config from './../../helpers/config.json';
 
-class ProductsAdmin extends React.Component{
+const ProductsAdmin = () => {
+    let navigate = useNavigate();
+    const [rowsData, setRows] = useState(0);
+    useEffect(() => {
+        updateProducts();
+    });
 
-    state = {
-        productList: []
-    }
-
-    componentDidMount() {
+    const updateProducts = () => {
         const requestOptions = {
             method: 'GET', headers: { 'Content-Type': 'application/json'}
         };
         fetch(config.apiURL+"products/"+config.operatorId, requestOptions).then((response) => {
             return response.json();
         }).then((result) => {
-            this.setState({ productList: result.data.map((product) => { return product; }) });
+            // this.setState({ productList: result.data.map((product) => { return product; }) });
+            let productList = result.data.map((product) => { return product; });
+            let rowData;
+            if(productList.length === 0){
+                rowData = (<tr><td colSpan="4" className="text-center">No existen productos</td></tr>);
+            } else {
+                rowData = productList.map(p => {
+                    let button;
+                    if(p.active){
+                        button = <button className="btn btn-secondary" onClick={() => disable(p)}><i className="fas fa-eye-slash"></i> Deshabilitar</button>;
+                    } else {
+                        button = <button className="btn btn-primary" onClick={() => enable(p)}><i className="fas fa-eye"></i> Habilitar</button>;
+                    }
+                    
+                    return (<tr>
+                        <td>{p.name}</td><td className="text-right">${p.price}</td><td className="text-right">{p.stock}</td>
+                        <td className="d-flex justify-content-between">
+                            {button}
+                            <button className="btn btn-warning" onClick={() => edit(p)}><i className="fas fa-pencil"></i> Editar</button>
+                        </td>
+                    </tr>); 
+                });
+            }
+            setRows(rowData);
         });
-    
-    }
-    
-    disable = (product) => {
+    };
+
+    const disable = (product) => {
         if(window.confirm("¿Está seguro/a de querer deshabilitar:\n"+product.name)){
             const requestOptionsPatch = {
                 method: 'PUT', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({
@@ -39,19 +62,12 @@ class ProductsAdmin extends React.Component{
             fetch(config.apiURL+"products/"+product.id, requestOptionsPatch).then((response) => {
                 return response.json();
             }).then((result) => {
-                const requestOptions = {
-                    method: 'GET', headers: { 'Content-Type': 'application/json'}
-                };
-                fetch(config.apiURL+"products/"+config.operatorId, requestOptions).then((response) => {
-                    return response.json();
-                }).then((result) => {
-                    this.setState({ productList: result.data.map((product) => { return product; }) });
-                    window.alert("Deshabilitación completada")
-                });
+                updateProducts();
+                window.alert("Deshabilitación completada");
             });   
         }
     }
-    enable = (product) => {
+    const enable = (product) => {
         if(window.confirm("¿Está seguro/a de querer volver a habilitar:\n"+product.name)){
             const requestOptionsPatch = {
                 method: 'PUT', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({
@@ -68,43 +84,19 @@ class ProductsAdmin extends React.Component{
             fetch(config.apiURL+"products/"+product.id, requestOptionsPatch).then((response) => {
                 return response.json();
             }).then((result) => {
-                const requestOptions = {
-                    method: 'GET', headers: { 'Content-Type': 'application/json'}
-                };
-                fetch(config.apiURL+"products/"+config.operatorId, requestOptions).then((response) => {
-                    return response.json();
-                }).then((result) => {
-                    this.setState({ productList: result.data.map((product) => { return product; }) });
-                    window.alert("Habilitación completada")
-                });
+                updateProducts();
+                window.alert("Habilitación completada")
             });   
         }
     }
-
-    render() {
-        let rowData;
-        if(this.state.productList.length === 0){
-            rowData = <tr><td colSpan="4" className="text-center">No existen productos</td></tr>;
-        } else {
-            rowData = this.state.productList.map(p => {
-                let button;
-                if(p.active){
-                    button = <button className="btn btn-secondary" onClick={() => this.disable(p)}><i className="fas fa-eye-slash"></i> Deshabilitar</button>;
-                } else {
-                    button = <button className="btn btn-primary" onClick={() => this.enable(p)}><i className="fas fa-eye"></i> Habilitar</button>;
-                }
-                
-                return (<tr>
-                    <td>{p.name}</td><td className="text-right">${p.price}</td><td className="text-right">{p.stock}</td>
-                    <td className="d-flex justify-content-between">
-                        {button}
-                        <button className="btn btn-warning"><i className="fas fa-pencil"></i> Editar</button>
-                    </td>
-                </tr>); 
-            });
-        }
-        return (
-            <div>
+    const edit = (product) => {
+        let productData = JSON.stringify(product);
+        sessionStorage.setItem("product", productData);
+        navigate("/products/edit");
+    }
+    
+    return (
+        <div>
                 <Topbar />
                 <Sidebar />
                 <div className="content-wrapper">
@@ -140,7 +132,7 @@ class ProductsAdmin extends React.Component{
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                {rowData}
+                                                {rowsData}
                                         </tbody>
                                     </table>
                                 </div>
@@ -149,7 +141,6 @@ class ProductsAdmin extends React.Component{
                     </section>
                 </div>
             </div>
-        )
-    }
+    );
 }
 export default ProductsAdmin;
