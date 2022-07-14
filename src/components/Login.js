@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../helpers/useAuth';
 import config from '../helpers/config.json';
+import useAuth from '../helpers/useAuth';
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const {setAuth}  = useAuth();
     let navigate = useNavigate();
 
     const changeButtonState = (button, enable) => {
@@ -79,7 +79,7 @@ const Login = () => {
           changeButtonState(button, false);
           localStorage.setItem("user", infoUser);
           const roles = [infoData['level']];
-          setAuth({user, password, roles})
+          //setAuth({user, password, roles})
           navigate("/sales");
         } catch (error) {
           console.log(error);
