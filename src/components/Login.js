@@ -78,8 +78,8 @@ const Login = () => {
           showMessage(false, "");
           changeButtonState(button, false);
           localStorage.setItem("user", infoUser);
-          const roles = [infoData['level']];
-          //setAuth({user, password, roles})
+          /*const roles = [infoData['level']];
+          setAuth({user, password, roles})*/
           navigate("/sales");
         } catch (error) {
           console.log(error);

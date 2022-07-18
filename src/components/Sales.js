@@ -7,7 +7,25 @@ class Sales extends React.Component{
 
     state = {
         clientList: [],
-        productList: []
+        productList: [],
+        product: {
+            id: "",
+            name: "",
+            price: "",
+            MSU: 0,
+            stock: 0,
+            MDPrice: 0,
+            MDPercentge: 0,
+            active: true
+        }
+    }
+
+    selectProduct = (event) => {
+        let product = this.state.productList.find(product => product.id === event.target.value);
+        console.log(product);
+        this.setState({
+            product: product
+        });
     }
 
     componentDidMount() {
@@ -78,7 +96,7 @@ class Sales extends React.Component{
                                 <div className="col-12">
                                     <div className="form-group">
                                         <label className="control-label">Producto</label>
-                                        <select name="product" id="product" className="form-control">
+                                        <select name="product" id="product" className="form-control" onChange={this.selectProduct}>
                                             <option value="0">--Seleccione</option>
                                             {productList.map(product => (
                                                 <option key={product.id} value={product.id}>
@@ -91,13 +109,13 @@ class Sales extends React.Component{
                                 <div className="col-4">
                                     <div className="form-group">
                                         <label className="label-control">U.M.V.</label>
-                                        <input className="form-control" type="text" name="msv" id="msv" readOnly="readonly" />
+                                        <input className="form-control" type="text" name="msv" id="msv" readOnly="readonly" value={this.state.product.MSU} />
                                     </div>
                                 </div>
                                 <div className="col-4">
                                     <div className="form-group">
                                         <label className="label-control" >Stock</label>
-                                        <input className="form-control" type="text" name="stock" id="stock" readOnly="readonly" />
+                                        <input className="form-control" type="text" name="stock" id="stock" readOnly="readonly" value={this.state.product.stock} />
                                     </div>
                                 </div>
                                 <div className="col-4">
@@ -109,7 +127,7 @@ class Sales extends React.Component{
                                 <div className="col-4">
                                     <div className="form-group">
                                         <label className="label-control">Unitario</label>
-                                        <input className="form-control" type="number" name="unitary" id="unitary" />
+                                        <input className="form-control" type="text" name="unitary" id="unitary" value={this.state.product.price} />
                                     </div>
                                 </div>
                                 <div className="col-4">
